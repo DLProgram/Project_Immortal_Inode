@@ -1,2 +1,3 @@
-# Project_Immortal_Inode
-211 Robotics Scouting System for 2017-2018 VEX Game In The Zone
+# Project Immortal Inode
+## Code named Immortal Inode
+## Scouting System Used by VEX Robotics Team 211 for 2017-2018 Game In The Zone
