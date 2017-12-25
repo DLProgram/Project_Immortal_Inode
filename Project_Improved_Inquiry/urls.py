@@ -20,4 +20,5 @@ from django.urls import include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('scout_leader.urls')),
+    path('spider/', include('spider.urls')),
 ]
