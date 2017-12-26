@@ -1,0 +1,33 @@
+{% extends "spider/template.html" %}
+
+{% block content %}
+{% if matches %}
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Red1</th>
+                    <th scope="col">Red2</th>
+                    <th scope="col">Blue1</th>
+                    <th scope="col">Blue2</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for match in matches %}
+                    <tr>
+                        <th scope="row">{{ match.matchnum }}</th>
+                        <td>{{ match.red1 }}</td>
+                        <td>{{ match.red2 }}</td>
+                        <td>{{ match.blue1 }}</td>
+                        <td>{{ match.blue2 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <a class="btn btn-success btn-lg btn-block" href="{% url 'spider:add_to_db' event_id %}" role="button">Submit</a>
+    </div>
+    {% endif %}
+{% endblock %}

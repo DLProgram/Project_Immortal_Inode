@@ -1,0 +1,38 @@
+{% extends "spider/template.html" %}
+
+{% block content %}
+    <!-- <div class="row"> -->
+        <form method="get">
+          <div class="form-row">
+            <div class="col">
+              <input name="team" type="text" class="form-control" value="211Z">
+            </div>
+            <div class="col">
+              <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+          </div>
+        </form>
+    <!-- </div> -->
+    {% if matches %}
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">City</th>
+                    <th scope="col">Sku</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for match in matches %}
+                    <tr>
+                        <td><a href="{% url 'spider:event' match.sku %}">{{ match.name }}</a></td>
+                        <td>{{ match.loc_city }}</td>
+                        <td>{{ match.sku }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+{% endblock %}

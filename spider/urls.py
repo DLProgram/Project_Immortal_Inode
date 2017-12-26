@@ -6,7 +6,6 @@ app_name = 'spider'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('team/<str:team>', views.search_by_team, name='search_by_team'),
     path('event/<str:event_id>', views.event, name='event'),
-
+    path('add_to_db/<str:event_id>', views.add_to_db, name='add_to_db'),
 ]
