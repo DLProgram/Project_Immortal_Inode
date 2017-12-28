@@ -10,4 +10,5 @@
 
 # Installation
 1. Install Python3
-2. `pip install -r requirements.txt`
+2. Install MongoDB
+3. `pip install -r requirements.txt`
