@@ -3,6 +3,7 @@ import json
 from lxml import html
 import requests
 from django.http import HttpResponse
+from pymongo import MongoClient
 
 EVENT_URL = "https://www.robotevents.com/robot-competitions/vex-robotics-competition/{}.html"
 TEAM_URL = "https://api.vexdb.io/v1/get_events?team={}&season=current&status={}"
@@ -31,6 +32,19 @@ def event(request, event_id):
 
 
 def add_to_db(request, event_id):
-    data = json.loads(html.fromstring(requests.get(EVENT_URL.format(
-        event_id)).content).xpath('//results[@program="VRC"]/@data')[0])
-    return HttpResponse("OK")
+    try:
+        client = MongoClient()
+        db = client.pi2
+
+        db.matches.drop()
+
+        data = json.loads(html.fromstring(requests.get(EVENT_URL.format(
+            event_id)).content).xpath('//results[@program="VRC"]/@data')[0])
+        round2 = [x for x in data if x['round'] == 2]
+
+        db.matches.insert_many(round2)
+        result = db.matches.count()
+    except:
+        result = False
+
+    return HttpResponse(json.dumps({"success": result}), content_type="application/json")
