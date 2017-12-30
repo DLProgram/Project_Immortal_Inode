@@ -10,6 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
     <link rel="stylesheet" href="{% static "css/nouislider.min.css" %}">
+    <link rel="stylesheet" href="{% static "open-iconic/font/css/open-iconic-bootstrap.min.css" %}">
     {% block style %}{% endblock %}
   </head>
   <body>
@@ -29,26 +30,24 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item {% if title == 'Home' %} active {% endif %} ">
-            <a class="nav-link" href="{% url 'scout_leader:index' %}">Home</a>
+            <a class="nav-link" href="{% url 'scout_leader:index' %}">Home <span class="oi oi-home"></span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+          {% if user.is_superuser %}
+          <li class="nav-item {% if title == 'Change Event' %} active {% endif %} ">
+            <a class="nav-link" href="{% url 'spider:index' %}">Change Event <span class="oi oi-cog"></span></a>
           </li>
-          <!-- <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li> -->
+          {% else %}
+          <li class="nav-item {% if title == 'Scout' %} active {% endif %} ">
+            <a class="nav-link" href="{% url 'scout_leader:scout' 1 %}">Scout <span class="oi oi-clipboard"></span></a>
+          </li>
+          {% endif %}
+          <li class="nav-item {% if title == 'List Data' %} active {% endif %} ">
+            <a class="nav-link" href="{% url 'scout_leader:list_data' %}">List Data <span class="oi oi-list"></span></a>
+          </li>
         </ul>
       </div>
       <span class="navbar-text">
-        Loged in as: {{ user.get_username }} <a href="{% url 'scout_leader:signout' %}">Logout</a>
+        Loged in as: {{ user.get_username }} <a href="{% url 'scout_leader:signout' %}">Logout<span class="oi oi-account-logout"></span></a>
       </span>
     </nav>
     <div class="container">

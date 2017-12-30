@@ -19,7 +19,7 @@ def staff_check(user):
 
 @user_passes_test(staff_check)
 def index(request):
-    context = {"title": "Search"}
+    context = {"title": "Change Event"}
     if "team" in request.GET:
         team = request.GET["team"]
         # TODO: chnage past to current
@@ -48,6 +48,7 @@ def add_to_db(request, event_id):
         db = client.pi2
 
         db.matches.drop()
+        db.data.drop()
 
         data = json.loads(html.fromstring(requests.get(EVENT_URL.format(
             event_id)).content).xpath('//results[@program="VRC"]/@data')[0])

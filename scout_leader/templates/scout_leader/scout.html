@@ -38,12 +38,12 @@
         <div class="form-group col-md-5">
             <label for="finesse">Finesse</label>
             <div id="finesse"></div>
-            <input id="finesse_val" name="finesse" type="hidden" value="50">
+            <input id="finesse_val" name="finesse" type="hidden" value="0">
         </div>
         <div class="form-group col-md-5">
             <label for="defence">Defence</label>
             <div id="defence"></div>
-            <input id="defence_val" name="defence" type="hidden" value="50">
+            <input id="defence_val" name="defence" type="hidden" value="0">
         </div>
     </div>
     <div class="form-row">
@@ -53,17 +53,17 @@
         <div class="form-group col-md-3">
             <label for="lift">Lift</label>
             <div id="lift"></div>
-            <input id="lift_val" name="lift" type="hidden" value="50">
+            <input id="lift_val" name="lift" type="hidden" value="0">
         </div>
         <div class="form-group col-md-4">
             <label for="speed">Base Speed</label>
             <div id="speed"></div>
-            <input id="speed_val" name="speed" type="hidden" value="50">
+            <input id="speed_val" name="speed" type="hidden" value="0">
         </div>
         <div class="form-group col-md-3">
             <label for="intake">Intake</label>
             <div id="intake"></div>
-            <input id="intake_val" name="intake" type="hidden" value="50">
+            <input id="intake_val" name="intake" type="hidden" value="0">
         </div>
     </div>
     <div class="row">
@@ -131,17 +131,17 @@
 var finesse = document.getElementById('finesse');
 
 noUiSlider.create(finesse, {
-    start: [50],
+    start: [0],
     connect: [true, false],
-    step: 5,
+    step: 1,
     range: {
         'min': 0,
-        'max': 100
+        'max': 20
     }
 });
 
 finesse.noUiSlider.on('update', function(values, handle){
-    $('#finesse_val').val(values[handle]/100);
+    $('#finesse_val').val(values[handle]);
 });
 
 
@@ -149,68 +149,68 @@ finesse.noUiSlider.on('update', function(values, handle){
 var defence = document.getElementById('defence');
 
 noUiSlider.create(defence, {
-    start: [50],
+    start: [0],
     connect: [true, false],
-    step: 5,
+    step: 1,
     range: {
         'min': 0,
-        'max': 100
+        'max': 10
     }
 });
 
 defence.noUiSlider.on('update', function(values, handle){
-    $('#defence_val').val(values[handle]/100);
+    $('#defence_val').val(values[handle]);
 });
 
 // lift slider
 var lift = document.getElementById('lift');
 
 noUiSlider.create(lift, {
-    start: [50],
+    start: [0],
     connect: [true, false],
-    step: 5,
+    step: 1,
     range: {
         'min': 0,
-        'max': 100
+        'max': 10
     }
 });
 
 lift.noUiSlider.on('update', function(values, handle){
-    $('#lift_val').val(values[handle]/100);
+    $('#lift_val').val(values[handle]);
 });
 
 // speed slider
 var speed = document.getElementById('speed');
 
 noUiSlider.create(speed, {
-    start: [50],
+    start: [0],
     connect: [true, false],
-    step: 5,
+    step: 1,
     range: {
         'min': 0,
-        'max': 100
+        'max': 10
     }
 });
 
 speed.noUiSlider.on('update', function(values, handle){
-    $('#speed_val').val(values[handle]/100);
+    $('#speed_val').val(values[handle]);
 });
 
 // intake slider
 var intake = document.getElementById('intake');
 
 noUiSlider.create(intake, {
-    start: [50],
+    start: [0],
     connect: [true, false],
-    step: 5,
+    step: 1,
     range: {
         'min': 0,
-        'max': 100
+        'max': 5
     }
 });
 
 intake.noUiSlider.on('update', function(values, handle){
-    $('#intake_val').val(values[handle]/100);
+    $('#intake_val').val(values[handle]);
 });
 </script>
 {% endblock %}

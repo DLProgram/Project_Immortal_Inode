@@ -1,0 +1,45 @@
+{% extends "scout_leader/template.html" %}
+{% block content %}
+{% if data %}
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Match Number</th>
+                    <th scope="col">Team Number</th>
+                    <th scope="col">Auto</th>
+                    <th scope="col">Finesse</th>
+                    <th scope="col">Defence</th>
+                    <th scope="col">Lift</th>
+                    <th scope="col">Base Speed</th>
+                    <th scope="col">Intake</th>
+                    <th scope="col">Mobile Goal</th>
+                    <th scope="col">Cone on MG</th>
+                    <th scope="col">User</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in data %}
+                    <tr>
+                        <td>{{ d.match_num }}</td>
+                        <td>{{ d.team_num }}</td>
+                        <td>{{ d.auto }}</td>
+                        <td>{{ d.finesse }}</td>
+                        <td>{{ d.defence }}</td>
+                        <td>{{ d.lift }}</td>
+                        <td>{{ d.speed }}</td>
+                        <td>{{ d.intake }}</td>
+                        <td>{{ d.gl }}</td>
+                        <td>
+                            {% if d.cone %}
+                                <span class="oi oi-check"></span>
+                            {% endif %}
+                        </td>
+                        <td>{{ d.username }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+{% endblock %}

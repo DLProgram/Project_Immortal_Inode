@@ -1,7 +1,53 @@
 {% extends "scout_leader/template.html" %}
 
 {% block content %}
-
+{% if matches %}
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Red1</th>
+                    <th scope="col">Red2</th>
+                    <th scope="col">Blue1</th>
+                    <th scope="col">Blue2</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for match in matches %}
+                    <tr>
+                        <th scope="row">
+                            <a {% if not user.is_superuser %} 
+                                href="{% url 'scout_leader:scout' match.matchnum %}"
+                                {% endif%}>
+                            {{ match.matchnum }}</a>
+                        </th>
+                        <td>
+                            <a class="btn btn-danger" role="button" href="{% url 'scout_leader:team_detail' match.red1 %}">
+                                {{ match.red1 }}
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" role="button" href="{% url 'scout_leader:team_detail' match.red2 %}">
+                                {{ match.red2 }}
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" role="button" href="{% url 'scout_leader:team_detail' match.blue1 %}">
+                                {{ match.blue1 }}
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" role="button" href="{% url 'scout_leader:team_detail' match.blue2 %}">
+                                {{ match.blue2 }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
 {% endblock %}
 
 {% block js %}
