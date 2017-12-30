@@ -9,6 +9,7 @@
 4. [Django](https://www.djangoproject.com/)
 5. [noUiSlider](https://refreshless.com/nouislider/)
 6. [Peity](http://benpickles.github.io/peity/)
+7. [OPEN ICONIC](https://useiconic.com/open/)
 
 # Installation
 1. Install Python3
