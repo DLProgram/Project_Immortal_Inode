@@ -1,0 +1,5 @@
+[submodule ".\\scout_leader\\static\\bootstrap\\"]
+	url = https://github.com/twbs/bootstrap.git
+[submodule "scout_leader\\static\\bootstrap\\"]
+	path = scout_leader\\static\\bootstrap\\
+	url = https://github.com/twbs/bootstrap.git
