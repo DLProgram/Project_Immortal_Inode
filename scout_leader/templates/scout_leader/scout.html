@@ -1,0 +1,216 @@
+{% extends "scout_leader/template.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div role="alert" class="alert 
+        {%if user.groups.all.0.name == 'blue2' or user.groups.all.0.name == 'blue1'%}
+          alert-primary
+        {%elif user.groups.all.0.name == 'red1' or user.groups.all.0.name == 'red2'%}
+          alert-danger
+        {%else%}
+          alert-warning
+        {%endif%}
+        " >
+            Match: <b>{{ match_num }}</b> Team: <b>{{ team_num }}</b>
+        </div>
+    </div>
+</div>
+<form action="/save_data" method="get"  id="needs-validation" novalidate>
+    <input name="match_num" type="hidden" value="{{match_num}}">
+    <input name="team_num" type="hidden" value="{{team_num}}">
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <h3>Auto</h3>
+            <select multiple class="form-control" id="auto" name="auto" required>
+                <option value="0">No Auto</option>
+                <option value="1">Mobile Goal</option>
+                <option value="2">Stationary</option>
+                <option value="4">Defence</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <h3>Driver</h3>
+        </div>
+        <div class="form-group col-md-5">
+            <label for="finesse">Finesse</label>
+            <div id="finesse"></div>
+            <input id="finesse_val" name="finesse" type="hidden" value="50">
+        </div>
+        <div class="form-group col-md-5">
+            <label for="defence">Defence</label>
+            <div id="defence"></div>
+            <input id="defence_val" name="defence" type="hidden" value="50">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <h3>Robot</h3>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="lift">Lift</label>
+            <div id="lift"></div>
+            <input id="lift_val" name="lift" type="hidden" value="50">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="speed">Base Speed</label>
+            <div id="speed"></div>
+            <input id="speed_val" name="speed" type="hidden" value="50">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="intake">Intake</label>
+            <div id="intake"></div>
+            <input id="intake_val" name="intake" type="hidden" value="50">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-3">
+            <h3>Mobile Goal Lift</h3>
+        </div>
+        <div class="form-group col-md-5">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gl" id="na" value="0" checked>
+                <label class="form-check-label" for="na">
+                No Mobile Goal Lift
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gl" id="5pz" value="2">
+                <label class="form-check-label" for="5pz">
+                5 Point Zone
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gl" id="10pz" value="10">
+                <label class="form-check-label" for="10pz">
+                10 Point Zone
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gl" id="20pz" value="20">
+                <label class="form-check-label" for="20pz">
+                20 Point Zone
+                </label>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="10" id="cone" name="cone">
+              <label class="form-check-label" for="cone">
+                Stack on mobile goal
+              </label>
+            </div>
+        </div>
+    </div>
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+{% endblock %}
+
+{% block js %}
+<script>
+// Form validation
+(function() {
+  'use strict';
+
+  window.addEventListener('load', function() {
+    var form = document.getElementById('needs-validation');
+    form.addEventListener('submit', function(event) {
+      if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    }, false);
+  }, false);
+})();
+
+// finesse slider
+var finesse = document.getElementById('finesse');
+
+noUiSlider.create(finesse, {
+    start: [50],
+    connect: [true, false],
+    step: 5,
+    range: {
+        'min': 0,
+        'max': 100
+    }
+});
+
+finesse.noUiSlider.on('update', function(values, handle){
+    $('#finesse_val').val(values[handle]/100);
+});
+
+
+// defence slider
+var defence = document.getElementById('defence');
+
+noUiSlider.create(defence, {
+    start: [50],
+    connect: [true, false],
+    step: 5,
+    range: {
+        'min': 0,
+        'max': 100
+    }
+});
+
+defence.noUiSlider.on('update', function(values, handle){
+    $('#defence_val').val(values[handle]/100);
+});
+
+// lift slider
+var lift = document.getElementById('lift');
+
+noUiSlider.create(lift, {
+    start: [50],
+    connect: [true, false],
+    step: 5,
+    range: {
+        'min': 0,
+        'max': 100
+    }
+});
+
+lift.noUiSlider.on('update', function(values, handle){
+    $('#lift_val').val(values[handle]/100);
+});
+
+// speed slider
+var speed = document.getElementById('speed');
+
+noUiSlider.create(speed, {
+    start: [50],
+    connect: [true, false],
+    step: 5,
+    range: {
+        'min': 0,
+        'max': 100
+    }
+});
+
+speed.noUiSlider.on('update', function(values, handle){
+    $('#speed_val').val(values[handle]/100);
+});
+
+// intake slider
+var intake = document.getElementById('intake');
+
+noUiSlider.create(intake, {
+    start: [50],
+    connect: [true, false],
+    step: 5,
+    range: {
+        'min': 0,
+        'max': 100
+    }
+});
+
+intake.noUiSlider.on('update', function(values, handle){
+    $('#intake_val').val(values[handle]/100);
+});
+</script>
+{% endblock %}

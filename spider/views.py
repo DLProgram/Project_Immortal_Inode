@@ -4,11 +4,20 @@ from lxml import html
 import requests
 from django.http import HttpResponse
 from pymongo import MongoClient
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required
+
 
 EVENT_URL = "https://www.robotevents.com/robot-competitions/vex-robotics-competition/{}.html"
 TEAM_URL = "https://api.vexdb.io/v1/get_events?team={}&season=current&status={}"
 
 
+def staff_check(user):
+    print(user)
+    return user.is_staff
+
+
+@user_passes_test(staff_check)
 def index(request):
     context = {"title": "Search"}
     if "team" in request.GET:
@@ -22,6 +31,7 @@ def index(request):
     return render(request, 'spider/index.html', context)
 
 
+@user_passes_test(staff_check)
 def event(request, event_id):
     context = {"title": "Event:{}".format(event_id), "event_id": event_id}
     data = json.loads(html.fromstring(requests.get(EVENT_URL.format(
@@ -31,6 +41,7 @@ def event(request, event_id):
     return render(request, 'spider/match.html', context)
 
 
+@user_passes_test(staff_check)
 def add_to_db(request, event_id):
     try:
         client = MongoClient()
