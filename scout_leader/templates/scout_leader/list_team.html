@@ -1,0 +1,31 @@
+{% extends "scout_leader/template.html" %}
+{% block content %}
+{% if team_data %}
+<div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Team Number</th>
+                    <th scope="col">Average Score</th>
+                    <th scope="col">List of Autos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for team in team_data %}
+                <tr>
+                    <td>{{team.team_num}} <span class="line">{{team.data}}</span></td>
+                    <td>{{team.sum}} / {{team.num_of_match}} = {{team.avg}}</td>
+                    <td>{{team.auto}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+{% endif %}
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    $(".line").peity("line")
+</script>
+{% endblock %}

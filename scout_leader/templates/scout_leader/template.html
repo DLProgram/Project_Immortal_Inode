@@ -44,6 +44,9 @@
           <li class="nav-item {% if title == 'List Data' %} active {% endif %} ">
             <a class="nav-link" href="{% url 'scout_leader:list_data' %}">List Data <span class="oi oi-list"></span></a>
           </li>
+          <li class="nav-item {% if title == 'Leaderboard' %} active {% endif %} ">
+            <a class="nav-link" href="{% url 'scout_leader:list_team' %}">Leaderboard <span class="oi oi-sort-descending"></span></span></a>
+          </li>
         </ul>
       </div>
       <span class="navbar-text">
@@ -57,6 +60,7 @@
 
     
     <script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
+    <script src="{% static "js/jquery.peity.min.js" %}"></script>
     <script src="{% static "js/popper.min.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/nouislider.min.js" %}"></script>

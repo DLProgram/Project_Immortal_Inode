@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from pymongo import MongoClient
-import json
+import pymongo
+import statistics
+from operator import itemgetter
 
 
 def signin(request):
@@ -36,7 +38,18 @@ def index(request):
 
     client = MongoClient()
     db = client.pi2
-    matches = [m for m in db['matches'].find()]
+    matches = []
+    for match in db['matches'].find():
+        count = db['data'].count({"match_num": match['matchnum']})
+        if count == 4:
+            match['bg'] = "table-success"
+        elif count < 4 and count != 0:
+            match['bg'] = "table-warning"
+        elif count > 4:
+            match['bg'] = "table-danger"
+        else:
+            match['bg'] = ""
+        matches.append(match)
 
     context["matches"] = matches
     return render(request, 'scout_leader/index.html', context)
@@ -66,7 +79,9 @@ def save_data(request):
 
     for key, value in match_data.items():
         if len(value) == 1:
-            if key != "team_num":
+            if key == "auto":
+                match_data[key] = value
+            elif key != "team_num":
                 match_data[key] = float(value[0])
             else:
                 match_data[key] = value[0]
@@ -84,6 +99,7 @@ def save_data(request):
                     match_num=int(request.GET["match_num"]) + 1)
 
 
+@login_required
 def list_data(request):
     context = {"title": "Data"}
 
@@ -95,6 +111,7 @@ def list_data(request):
     return render(request, 'scout_leader/list_data.html', context)
 
 
+@login_required
 def team_detail(request, team_num):
     context = {"title": team_num}
 
@@ -104,3 +121,37 @@ def team_detail(request, team_num):
 
     context["data"] = match_data
     return render(request, 'scout_leader/team_detail.html', context)
+
+
+@login_required
+def list_team(request):
+    context = {"title": "Leaderboard"}
+
+    client = MongoClient()
+    db = client.pi2
+    team_list = db['data'].find().distinct("team_num")
+    team_data = []
+    for t in team_list:
+        team = {}
+        team["team_num"] = t
+
+        match_data = list(db['data'].find({"team_num": t}).sort(
+            "match_num", pymongo.ASCENDING))
+
+        data = [match['score'] for match in match_data]
+        team["data"] = ','.join(map(str, data))
+
+        team["sum"] = int(sum(data))
+        team["num_of_match"] = len(data)
+        team["avg"] = "{:0.2f}".format(statistics.mean(data))
+
+        auto = sorted(
+            list(set([a for match in match_data for a in match['auto']])))
+        team['auto'] = auto
+
+        team_data.append(team)
+    # context["team_data"] = team_data
+    context["team_data"] = sorted(
+        team_data, key=itemgetter('avg'), reverse=True)
+
+    return render(request, 'scout_leader/list_team.html', context)

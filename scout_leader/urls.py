@@ -12,4 +12,5 @@ urlpatterns = [
     path('save_data/', views.save_data, name='save_data'),
     path('list_data/', views.list_data, name='list_data'),
     path('team_detail/<str:team_num>', views.team_detail, name='team_detail'),
+    path('list_team/', views.list_team, name='list_team'),
 ]
