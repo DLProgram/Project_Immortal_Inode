@@ -87,7 +87,8 @@ def save_data(request):
                 match_data[key] = value[0]
     score = match_data['finesse'] + match_data['defence'] + match_data['lift'] + \
         match_data['speed'] + match_data['intake'] + \
-        match_data['gl'] + (match_data['cone'] if 'cone' in match_data else 0)
+        match_data['gl'] + (match_data['cone'] if 'cone' in match_data else 0) + \
+        (match_data['base'] if 'base' in match_data else 0)
 
     match_data["username"] = request.user.username
     match_data["score"] = score

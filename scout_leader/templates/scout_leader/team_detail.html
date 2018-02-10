@@ -15,6 +15,7 @@
                     <th scope="col">Intake</th>
                     <th scope="col">Mobile Goal</th>
                     <th scope="col">Cone on MG</th>
+                    <th scope="col">Base Bot</th>
                     <th scope="col">User</th>
                 </tr>
             </thead>
@@ -32,6 +33,11 @@
                         <td>{{ d.gl }}</td>
                         <td>
                             {% if d.cone %}
+                                <span class="oi oi-check"></span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if d.base %}
                                 <span class="oi oi-check"></span>
                             {% endif %}
                         </td>
