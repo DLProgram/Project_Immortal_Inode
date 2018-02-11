@@ -144,7 +144,7 @@ def list_team(request):
 
         team["sum"] = int(sum(data))
         team["num_of_match"] = len(data)
-        team["avg"] = "{:0.2f}".format(statistics.mean(data))
+        team["avg"] = float("{:0.2f}".format(statistics.mean(data)))
 
         auto = sorted(
             list(set([a for match in match_data for a in match['auto']])))
