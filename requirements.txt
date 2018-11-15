@@ -1,4 +1,4 @@
 pymongo==3.5.1
 lxml==4.1.1
-Django==2.0
-requests==2.12.3
+Django==2.0.2
+requests==2.20.0
